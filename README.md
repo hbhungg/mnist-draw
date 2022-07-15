@@ -1,7 +1,7 @@
 # mnist-draw
-This repository contains a single page website that enables users to hand-draw and classify digits (0-9) using machine learning. A machine learning model trained against the MNIST dataset is used for classification. 
+**This fork port everything to the PyTorch library. Cause I want to brush up my PyTorch skill, as well as a rewrite of my old fork.**
 
-This is a fork that ported too PyTorch library. Cause I want to learn PyTorch. This is also a rewrite of my old fork.
+This repository contains a single page website that enables users to hand-draw and classify digits (0-9) using machine learning. A machine learning model trained against the MNIST dataset is used for classification. 
 
 # Setup 
 Python 3.5+ is required for compatability with all required modules.
