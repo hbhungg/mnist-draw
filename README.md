@@ -1,8 +1,10 @@
 # mnist-draw
 This repository contains a single page website that enables users to hand-draw and classify digits (0-9) using machine learning. A machine learning model trained against the MNIST dataset is used for classification. 
 
+This is a fork that ported too PyTorch library. Cause I want to learn PyTorch. This is also a rewrite of my old fork.
+
 # Setup 
-Python 3.5+ is required for compatability with all required modules
+Python 3.5+ is required for compatability with all required modules.
 
 ```bash
 # Clone this repository
@@ -35,9 +37,9 @@ Interface example:
 ## Machine Learning Model
 Python scripts related to defining, training, and implementing the machine learning model are contained within the `cgi-bin` folder. 
 
-A convolutional neural network (CNN) is defined within the `model.py` module using the [TFLearn](http://tflearn.org/) library. This model is configured for MNIST data inputs. 
+A convolutional neural network (CNN) is defined within the `model.py` module using the [PyTorch](http://pytorch.org/) library. This model is configured for MNIST data inputs. 
 
-The defined CNN can be trained against the MNIST dataset by running the `train.py` script. This script will automaticallly load the MNIST dataset from the TFLearn library to use as input, and the trained model's parameter files are saved into the `models` directory. Pre-trained model files are made available in this directory already.
+The defined CNN can be trained against the MNIST dataset by running the `train.py` script. This script will automaticallly load the MNIST dataset from the PyTorch library to use as input, and the trained model's parameter files are saved into the `results` directory. Pre-trained model files are made available in this directory already.
 
 The `mnist.py` script implements this trained model against the user's hand-drawn input. When the 'Predict' button is clicked, the contents of the drawing canvas are posted to this script as data url, and a JSON object containing the model's predictions is returned. 
 
