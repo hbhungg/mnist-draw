@@ -1,28 +1,28 @@
 """
 Define Convolutional Nerual Network model for MNIST input
 """
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
 
-from tflearn import DNN
-from tflearn.layers.core import input_data, dropout, fully_connected
-from tflearn.layers.conv import conv_2d, max_pool_2d
-from tflearn.layers.normalization import local_response_normalization
-from tflearn.layers.estimator import regression
+class Model(nn.Module):
+  def __init__(self):
+    super(Model, self).__init__()
+    self.conv1 = nn.Conv2d(1, 32, kernel_size=5)
+    self.conv2 = nn.Conv2d(32, 32, kernel_size=5)
+    self.conv3 = nn.Conv2d(32,64, kernel_size=5)
+    self.fc1 = nn.Linear(3*3*64, 256)
+    self.fc2 = nn.Linear(256, 10)
 
-# Building convolutional network
-network = input_data(shape=[None, 28, 28, 1], name='input')
-network = conv_2d(network, 32, 3, activation='relu', regularizer="L2")
-network = max_pool_2d(network, 2)
-network = local_response_normalization(network)
-network = conv_2d(network, 64, 3, activation='relu', regularizer="L2")
-network = max_pool_2d(network, 2)
-network = local_response_normalization(network)
-network = fully_connected(network, 128, activation='tanh')
-network = dropout(network, 0.8)
-network = fully_connected(network, 256, activation='tanh')
-network = dropout(network, 0.8)
-network = fully_connected(network, 10, activation='softmax')
-network = regression(network, optimizer='adam', learning_rate=0.01,
-                     loss='categorical_crossentropy', name='target')
-
-# Define model
-model = DNN(network, tensorboard_verbose=0)
+  def forward(self, x):
+    x = F.relu(self.conv1(x))
+    #x = F.dropout(x, p=0.5, training=self.training)
+    x = F.relu(F.max_pool2d(self.conv2(x), 2))
+    x = F.dropout(x, p=0.5, training=self.training)
+    x = F.relu(F.max_pool2d(self.conv3(x),2))
+    x = F.dropout(x, p=0.5, training=self.training)
+    x = x.view(-1,3*3*64 )
+    x = F.relu(self.fc1(x))
+    x = F.dropout(x, training=self.training)
+    x = self.fc2(x)
+    return F.log_softmax(x, dim=1)
