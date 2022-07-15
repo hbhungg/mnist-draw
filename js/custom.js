@@ -30,6 +30,7 @@ $("#predict").click(function(){
   // Post url to python script
   var jq = $.post('cgi-bin/mnist.py', url)
     .done(function (json) {
+      console.log(json);
       if (json.result) {
         $("#status").removeClass().toggleClass("fa fa-check");
         $('#svg-chart').show();
